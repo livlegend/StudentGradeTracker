@@ -1,4 +1,5 @@
 ﻿using StudentGradeTracker.Models;
+using System;
 
 namespace StudentGradeTracker
 {
@@ -25,6 +26,11 @@ namespace StudentGradeTracker
                         break;
                     case 3: addGrade();
                         break;
+                    case 4: findStudentByName();
+                        break;
+                    case 5:
+                        averageScore();
+                        break;
                     default:
                         Console.WriteLine("Invalid choice");
                         break;
@@ -32,6 +38,33 @@ namespace StudentGradeTracker
 
             }
 
+            
+        }
+
+        private static void averageScore()
+        {
+            if(grades.Count == 0) 
+            {
+                Console.WriteLine("No grades recorded");
+                return;
+            }
+            var score = grades.Average(grade => grade.Score);
+            Console.WriteLine($"La moyenne est {score:F2}");
+        }
+
+        private static void findStudentByName()
+        {
+            Console.WriteLine("Enter the name researched");
+            string name=Console.ReadLine();
+            var searchStudent= students.Where(student => student.Name.ToLower()==name.ToLower());
+            if (searchStudent.Any() ) 
+            {
+                foreach (var item in searchStudent)
+                {
+                    Console.WriteLine(item.Name);
+                }
+            }
+            else { Console.WriteLine("No results found"); }
             
         }
 
@@ -120,7 +153,9 @@ namespace StudentGradeTracker
             Console.WriteLine("1. ADD STUDENT");
             Console.WriteLine("2. VIEW STUDENTS");
             Console.WriteLine("3. ADD GRADE");
-            Console.WriteLine("4. EXIT");
+            Console.WriteLine("4. SEARCH BY NAME");
+            Console.WriteLine("3. VIEW SCORE AVERAGE");
+            Console.WriteLine("0. EXIT");
         }
     }
 }
